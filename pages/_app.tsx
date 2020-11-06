@@ -1,11 +1,14 @@
 import React from 'react';
-import { OfflineProvider, OfflineContext, GeolocationProvider } from '../context';
 import { AppProps, AppContext } from 'next/app';
-import '../styles/index.css';
+import { Provider, connect } from 'react-redux';
+import store from '../store';
 import Head from 'next/head';
+import { AppState } from 'app';
+import { addListeners, handleConnectionChange } from '../store/modules/offline';
+import '../styles/index.css';
 
-const App = ({ Component, pageProps }: AppProps) => {
-  const { addListeners, handleConnectionChange } = React.useContext(OfflineContext);
+const AppPage = (props: AppProps & ConnectedProps) => {
+  const { Component, pageProps, handleConnectionChange, addListeners } = props;
 
   React.useEffect(() => {
     handleConnectionChange(), addListeners();
@@ -33,7 +36,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-App.getInitialProps = async (appContext: AppContext) => {
+AppPage.getInitialProps = async (appContext: AppContext) => {
   let pageProps = {};
 
   if (appContext.Component.getInitialProps) {
@@ -45,12 +48,22 @@ App.getInitialProps = async (appContext: AppContext) => {
   };
 };
 
+const mapStateToProps = ({ offline }: AppState) => {
+  return {
+    offline,
+  };
+};
+
+const actions = { handleConnectionChange, addListeners };
+
+type ConnectedProps = typeof actions & ReturnType<typeof mapStateToProps>;
+
+const App = connect(mapStateToProps, actions)(AppPage);
+
 const AppComponent = (props) => (
-  <GeolocationProvider>
-    <OfflineProvider>
-      <App {...props} />
-    </OfflineProvider>
-  </GeolocationProvider>
+  <Provider store={store}>
+    <App {...props} />
+  </Provider>
 );
 
 export default AppComponent;
