@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply bg-gray-100;
+  @apply text-gray-900;
+  @apply antialiased;
+}
+
+@tailwind utilities;

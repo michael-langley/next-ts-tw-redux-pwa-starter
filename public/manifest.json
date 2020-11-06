@@ -1,0 +1,20 @@
+{
+  "name": "Next App",
+  "short_name": "Next App",
+  "start_url": "/",
+  "background_color": "#001f3f",
+  "theme_color": "#7FDBFF",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "site-icons/android-chrome-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "site-icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
